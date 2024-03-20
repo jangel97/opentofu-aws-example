@@ -33,8 +33,6 @@ WORKDIR /workspace
 RUN chown -R 1001:1001 /workspace && \
     chmod 755 /workspace
 
-# │ Error while installing hashicorp/aws v5.40.0: mkdir .terraform: permission denied
-
 # Default command to run when starting the container
 ENTRYPOINT ["/usr/local/bin/tofu"]
 CMD ["--help"]

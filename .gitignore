@@ -12,7 +12,6 @@ crash.log
 # password, private keys, and other secrets. However, if you have tfvars
 # files you wish to share, you can comment out the following line and add
 # specific tfvars files to your repository.
-*.tfvars
 *.tfvars.json
 
 # Ignore override files as they are usually used to override resources locally and are not checked in
