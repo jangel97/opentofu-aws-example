@@ -33,6 +33,12 @@ This project uses OpenTofu to provision an AWS EC2 instance. It's designed to be
 
    For this particular scenario, you should configure `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables.
 
+   In your terminal you can run the following commands:
+   ```bash
+   export AWS_ACCESS_KEY_ID=<insert the aws key id>
+   export AWS_SECRET_ACCESS_KEY=<insert the aws secret access key>
+   ```
+
    [AWS Provider Documentation on Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
 ## Running the Project
