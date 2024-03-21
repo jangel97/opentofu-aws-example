@@ -43,6 +43,13 @@ This project uses OpenTofu to provision an AWS EC2 instance. It's designed to be
 
 ## Running the Project
 
+0. **Create an ssh key to be able to login to the instance**
+
+   This is the SSH key that will be used so we can login to the instances later.
+   ```bash
+   ssh-keygen -N "" -t rsa -b 4096 -f opentofu-aws-instance/sshkey
+   ```
+
 1. **Initialize OpenTofu**
 
    Initialize the OpenTofu project to prepare your environment.
@@ -118,7 +125,14 @@ This project uses OpenTofu to provision an AWS EC2 instance. It's designed to be
    opentofu-ubi9 show
    ```
 
-7. **Cleanup resources**
+7. **Ensuring SSH Functionality**
+After the instances are provisioned and initiated, you can confirm the operability of SSH by executing the command below:
+```bash
+ssh -i opentofu-aws-instance/sshkey ec2-user@x.x.x.x
+```
+Replace "x.x.x.x" with an IP address obtained from the command mentioned in section 4.
+
+8. **Cleanup resources**
 
    Finally, cleanup the aws resources.
 

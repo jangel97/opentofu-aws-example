@@ -27,3 +27,6 @@ terraform.rc
 
 # Ignore any .log files that may be produced during terraform operations
 *.log
+
+# Ignore ssh key
+*ssh*
