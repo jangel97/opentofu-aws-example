@@ -88,7 +88,31 @@ This project uses OpenTofu to provision an AWS EC2 instance. It's designed to be
    opentofu-ubi9 output
    ```
 
-5. **Cleanup resources**
+5. **List resources**
+
+   ```bash
+   docker run -it \
+   -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+   --rm \
+   -v "$(pwd)"/opentofu-aws-instance:/workspace \
+   --user $(id -u) \
+   opentofu-ubi9 state list
+   ```
+
+7. **Comprehensive overview of current opentofu managed AWS infra**
+
+   ```bash
+   docker run -it \
+   -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+   --rm \
+   -v "$(pwd)"/opentofu-aws-instance:/workspace \
+   --user $(id -u) \
+   opentofu-ubi9 show
+   ```
+
+7. **Cleanup resources**
 
    Finally, cleanup the aws resources.
 
@@ -117,3 +141,5 @@ This project is using local workspace. Please, if needed you can modify this pro
 This process can be efficiently managed using Ansible in AWX. Specifically, you would store your virtual machines (VMs) information in a YAML dictionary as an Ansible variable. Following this, you incorporate a task into your Ansible playbook that transforms the VM data dictionary into a `terraform.tfvars.json` file. Lastly, you utilize OpenTofu to execute operations on AWS, leveraging the variables defined by Ansible.
 
 The Dockerfile serves as a base for building an AWX Execution Environment.
+
+By using this method, Ansible acts as an interface to OpenTofu. This approach also makes it easier to avoid being tied to a single service provider (e.g. Ansible Automation Platform) because OpenTofu can be set up to work with, for example, GitLab pipelines too.

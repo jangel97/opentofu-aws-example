@@ -9,7 +9,7 @@ variable "vms" {
     ami              = string
     instance_type    = string
     subnet_id        = string
-    security_group_id = string
+    security_group_ids = list(string)
     tags             = map(string)
   }))
 }
