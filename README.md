@@ -27,11 +27,13 @@ This project uses OpenTofu to provision an AWS EC2 instance. It's designed to be
    docker build -t opentofu-ubi9 .
    ```
 
-3. **Configure AWS Credentials**
+3. **Setting Up AWS Credentials**
 
-   Ensure your AWS credentials are configured on your local machine. Typically, this involves setting up the `~/.aws/credentials` file or exporting `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables.
+   It's crucial to have your AWS credentials established on your local system. This usually means creating a `~/.aws/credentials` file or setting the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables.
 
-   https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+   For this particular scenario, you should configure `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as environment variables.
+
+   [AWS Provider Documentation on Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
 ## Running the Project
 
@@ -39,26 +41,71 @@ This project uses OpenTofu to provision an AWS EC2 instance. It's designed to be
 
    Initialize the OpenTofu project to prepare your environment.
 
-   ```
-   docker run -it --rm -v "$(pwd)"/opentofu-aws-instance:/workspace --user $(id -u) opentofu-ubi9 init
+   ```bash
+   docker run -it --rm \
+   -v "$(pwd)"/opentofu-aws-instance:/workspace \
+   --user $(id -u) \
+   opentofu-ubi9 init
    ```
 
 2. **Plan Infrastructure**
 
    Review the changes OpenTofu will make to your infrastructure without applying them.
 
-   ```
-   docker run -it --rm -v "$(pwd)"/opentofu-aws-instance:/workspace --user $(id -u) opentofu-ubi9 plan
+   ```bash
+   docker run -it \
+   -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+   --rm \
+   -v "$(pwd)"/opentofu-aws-instance:/workspace \
+   --user $(id -u) \
+   opentofu-ubi9 plan
    ```
 
 3. **Apply Configuration**
 
    Apply the configuration to provision the AWS EC2 instance.
 
+   ```bash
+   docker run -it \
+   -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+   --rm \
+   -v "$(pwd)"/opentofu-aws-instance:/workspace \
+   --user $(id -u) \
+   opentofu-ubi9 apply -auto-approve
    ```
-   docker run -it --rm -v "$(pwd)"/opentofu-aws-instance:/workspace --user $(id -u) opentofu-ubi9 apply
+
+4. **Print private IP of instance**
+
+   ```bash
+   docker run -it \
+   -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+   --rm \
+   -v "$(pwd)"/opentofu-aws-instance:/workspace \
+   --user $(id -u) \
+   opentofu-ubi9 output
+   ```
+
+5. **Cleanup resources**
+
+   Finally, cleanup the aws resources.
+
+   ```bash
+   docker run -it \
+   -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+   --rm \
+   -v "$(pwd)"/opentofu-aws-instance:/workspace \
+   --user $(id -u) \
+   opentofu-ubi9 destroy -auto-approve
    ```
 
 ## Customization
 
 To customize the AWS EC2 instance specifications, edit the `variables.tf` and `terraform.tfvars` files with your preferred settings, such as instance type, AMI ID, and AWS region.
+
+## Notes
+
+This project is using local workspace. Please, if needed you can modify this project to suit your needs and store the state of the opentofu provisioned resources as per this doc https://opentofu.org/docs/language/settings/backends/configuration/.

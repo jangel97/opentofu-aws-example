@@ -1,3 +1,6 @@
-aws_region     = "us-west-2"
-instance_ami   = "ami-0c02fb55956c7d316" # Example AMI, replace with a valid one
+aws_region     = "us-east-1"
+instance_ami   = "ami-07f72922468d300b9"
 instance_type  = "t2.micro"
+subnet_id      = "subnet-0459cc467372d151e"
+vpc_id         = "vpc-09324753e2d94bc2a"
+security_group_id = "sg-0a129ee43bc61e9ac"
