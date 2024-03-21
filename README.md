@@ -10,6 +10,13 @@ This project uses OpenTofu to provision an AWS EC2 instance. It's designed to be
 
 ## Setup
 
+0. **If you have podman but not docker**
+   Run following command:
+
+   ```bash
+   alias docker='podman'
+   ```
+
 1. **Clone the Repository**
 
    Clone this repository to your local machine to get started with the project.
