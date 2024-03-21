@@ -108,4 +108,12 @@ To customize the AWS EC2 instance specifications, edit the `variables.tf` and `t
 
 ## Notes
 
+### Potential remote workspace
+
 This project is using local workspace. Please, if needed you can modify this project to suit your needs and store the state of the opentofu provisioned resources as per this doc https://opentofu.org/docs/language/settings/backends/configuration/.
+
+### Potential integration with AWX
+
+This process can be efficiently managed using Ansible in AWX. Specifically, you would store your virtual machines (VMs) information in a YAML dictionary as an Ansible variable. Following this, you incorporate a task into your Ansible playbook that transforms the VM data dictionary into a `terraform.tfvars.json` file. Lastly, you utilize OpenTofu to execute operations on AWS, leveraging the variables defined by Ansible.
+
+The Dockerfile serves as a base for building an AWX Execution Environment.
